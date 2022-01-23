@@ -1,20 +1,28 @@
-# STM32Cube Makefile
+# P1/P2 decoding on STM32L031
 
-This is a template application for the STM32 ARM microcontrollers that compiles with GNU tools.
+This is an example application for the STM32L031 ARM microcontrollers
+that compiles with GNU tools.
+
+It decodes the P1/P2 protocol used by Daikin heat pumps received on PB0
+and forwards it to the VUART.
 
 It serves as a quick-start for those who do not wish to use an IDE, but rather
 develop in a text editor of choice and build from the command line.
+
+It makes use of the nano newlib as the Cortex-M0 only has 32k of flash.
 
 ## Target Overview
 
   - `all`       Builds the target ELF binary.
   - `program`   Flashes the ELF binary to the target board.
   - `debug`     Launches GDB and connects to the target.
-  - `cube`      Downloads the most recent STM32Cube version from the ST website and extract it to `cube`.
-  - `template`  Copies a simple example/template, startup code and a linker script from the `cube` to your `src` directory.
   - `clean`     Remove all files and directories which have been created during the compilation.
 
 ## Installing
+
+Checkout the submodules:
+
+    git submodule update --init --checkout
 
 Before building, you must install the GNU compiler toolchain.
 I'm using the the `gnu-none-eabi` triple shipped with recent Debian and Ubuntu versions:
@@ -30,25 +38,7 @@ You also might want to install some other libraries and debuggers:
 Your source code has to be put in the `src` directory.
 Dont forget to add your source files in the Makefile.
 
-## Programming and debugging code on the board
+## Acknowledgement
 
-First, make sure you have OpenOCD installed and in your path (see above).
-Recent versions already come with full support for the discovery and nucleus boards.
-Then connect your board, and load the application by saying:
-
-    make program
-
-To load the program and debug it using GDB, simply use the debug target:
-
-    make debug
-
-GDB connects to the board by launching OpenOCD in the background.
-See [this blog post](http://www.mjblythe.com/hacks/2013/02/debugging-stm32-with-gdb-and-openocd/)
-for info about how it works.
-
-### UDEV Rules for the Discovery Boards
-
-If you are not able to communicate with the Discovery board without
-root privileges you should add [appropriate udev rules](49-stlink.rules).
-
-
+Based on [stv0g/stm32cube-gcc](https://github.com/stv0g/stm32cube-gcc)'s STM32Cube Makefile project.
+Many thanks to Steffen Vogel for this great Makefile project.
